@@ -81,10 +81,10 @@ echo "Async Creating load balancer .."
 az network lb create --resource-group $rgname --name $lbname --location $loc --backend-pool-name $backendpoolname --frontend-ip-name $frontendip --private-ip-address "10.0.0.4" --sku "Standard" --vnet-name $vnetname --subnet $subnetname --no-wait >> $logfile
 
 echo "Async Creating First node, with both ssh key and password authentication methods .."
-az vm create -g $rgname -n $vmname1 --admin-username $username --admin-password $password --authentication-type "all"  --ssh-key-values $sshpubkeyfile --availability-set $asname --image $offer --data-disk-sizes-gb 6 --vnet-name $vnetname --subnet $subnetname --public-ip-sku Standard --no-wait >> $logfile
+az vm create -g $rgname -n $vmname1 --admin-username $username --admin-password $password --authentication-type "all"  --ssh-key-values $sshpubkeyfile --availability-set $asname --image $offer --data-disk-sizes-gb 6 --vnet-name $vnetname --subnet $subnetname --public-ip-sku Standard --private-ip-address "10.0.0.5" --no-wait >> $logfile
 
 echo "Sync Creating Second node, with both ssh key and password authentication methods .."
-az vm create -g $rgname -n $vmname2 --admin-username $username --admin-password $password --authentication-type "all" --ssh-key-values $sshpubkeyfile --availability-set $asname --image $offer --data-disk-sizes-gb 6 --vnet-name $vnetname --subnet $subnetname --public-ip-sku Standard >> $logfile
+az vm create -g $rgname -n $vmname2 --admin-username $username --admin-password $password --authentication-type "all" --ssh-key-values $sshpubkeyfile --availability-set $asname --image $offer --data-disk-sizes-gb 6 --vnet-name $vnetname --subnet $subnetname --public-ip-sku Standard --private-ip-address "10.0.0.6" >> $logfile
 
 echo "Connecting the machines to the load balancer .."
 az network lb probe create --lb-name $lbname --resource-group $rgname --name $probename --port 61000 --protocol Tcp >> $logfile
