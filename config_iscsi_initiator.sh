@@ -40,10 +40,20 @@ echo "10.0.0.6  nfs-1" >> /etc/hosts
 #sudo zypper install --non-interactive drbd drbd-kmp-default drbd-utils
 
 sudo sh -c 'echo -e "n\n\n\n\n\nw\n" | fdisk /dev/disk/azure/scsi1/lun0'
-sudo pvcreate /dev/disk/azure/scsi1/lun0-part1  
-sudo vgcreate vg-NW1-NFS /dev/disk/azure/scsi1/lun0-part1
-sudo lvcreate -l 100%FREE -n NW1 vg-NW1-NFS
-
+partprobe
+sleep 20
+ls -l /dev/disk/azure/scsi1/lun0-part1 
+if [ $? -eq 0 ]
+then
+    sudo pvcreate /dev/disk/azure/scsi1/lun0-part1  
+    sudo vgcreate vg-NW1-NFS /dev/disk/azure/scsi1/lun0-part1
+    sudo lvcreate -l 100%FREE -n NW1 vg-NW1-NFS
+else
+    sleep 20
+    sudo pvcreate /dev/disk/azure/scsi1/lun0-part1  
+    sudo vgcreate vg-NW1-NFS /dev/disk/azure/scsi1/lun0-part1
+    sudo lvcreate -l 100%FREE -n NW1 vg-NW1-NFS
+fi
 
 ### tasks left
 #cat << EOF > /root/tasks_remaining
