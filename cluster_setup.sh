@@ -62,7 +62,7 @@ function apply_sles15_recommend()
     zypper --non-interactive --no-refresh install fence-agents
     zypper --non-interactive --no-refresh install bc
     resouce_agent_minor_version=`zypper info resource-agents | grep -i version | awk '{print $NF}' | cut -d '-' -f2 | rev | cut -c3- | rev`
-    recommended_resouce_agent_version='4.13'
+    recommended_resouce_agent_version='4.3'
     result=`echo $resouce_agent_minor_version '>' $recommended_resouce_agent_version | bc -l`
     if [ $result ]
     then
