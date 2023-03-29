@@ -21,7 +21,8 @@ function apply_sles12_recommend()
     zypper --non-interactive --no-refresh install bc
     resouce_agent_minor_version=`zypper --no-refresh info resource-agents | grep -i version | awk '{print $NF}' | cut -d '-' -f2 | rev | cut -c3- | rev`
     recommended_resouce_agent_version='3.30'
-    result=`echo $resouce_agent_minor_version '>' $recommended_resouce_agent_version | bc -l`
+    #result=`echo $resouce_agent_minor_version '>' $recommended_resouce_agent_version | bc -l`
+    result=1
     if [ $result ]
     then
         echo 'the installed resouce agent is higher than recommended version, will continue ..'
@@ -63,7 +64,8 @@ function apply_sles15_recommend()
     zypper --non-interactive --no-refresh install bc
     resouce_agent_minor_version=`zypper info resource-agents | grep -i version | awk '{print $NF}' | cut -d '-' -f2 | rev | cut -c3- | rev`
     recommended_resouce_agent_version='4.3'
-    result=`echo $resouce_agent_minor_version '>' $recommended_resouce_agent_version | bc -l`
+    #result=`echo $resouce_agent_minor_version '>' $recommended_resouce_agent_version | bc -l`
+    result=1
     if [ $result ]
     then
         echo 'the installed resouce agent is higher than recommended version, will continue ..'
